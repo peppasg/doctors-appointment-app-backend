@@ -1,6 +1,6 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
-interface IPhone { number:string}
+interface IPhone {type:string, number:string}
 
 
 export interface IUser extends Document{
@@ -19,7 +19,8 @@ export interface IUser extends Document{
     roles: Types.ObjectId[];
 }
 
-const PhoneSchema = new Schema<IPhone>({ 
+const PhoneSchema = new Schema<IPhone>({
+  type: String, 
   number: String
 })
 
