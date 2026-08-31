@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
+import { Types } from 'mongoose';
 import * as userService from '../services/user.service';
 import { UpdateUserDTO } from '../dto/user.dto';
 
@@ -29,6 +30,9 @@ export const getOneByEmail = async (req: Request, res: Response, next: NextFunct
 
 export const create = async(req:Request, res: Response, next: NextFunction) => {
 try {
+    if (req.body.roles?.some((roleId: string) => !Types.ObjectId.isValid(roleId))) {
+        return res.status(400).json({ message: 'Invalid role id' });
+    }
     const user = await userService.createUser(req.body);
     res.status(201).json({status:true, data:user});
 } catch (err) {next(err)}
@@ -43,6 +47,9 @@ export const update = async(req:Request, res: Response, next: NextFunction) => {
         }
 
         const data: UpdateUserDTO = req.body;
+        if (data.roles?.some((roleIds) => !Types.ObjectId.isValid(roleIds))) {
+            return res.status(400).json({ message: 'Invalid role id' });
+        }
         const result = await userService.updateUser(username, data);
         if (!result)
             return res.status(401).json({ message: "User not found" })
