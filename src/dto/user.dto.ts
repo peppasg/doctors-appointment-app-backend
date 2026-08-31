@@ -19,7 +19,7 @@ export interface CreateUserDTO {
         po?: string;
     };
     phone?: IPhoneDTO[];
-    roles?: string[];
+    roles?: string;
 }
 
 export interface UserResponseDTO {
@@ -36,7 +36,7 @@ export interface UserResponseDTO {
         po?: string;
     };
     phone?: IPhoneDTO[];
-    roles?: string[];
+    roles?: string;
 }
 
 export interface UpdateUserDTO {
