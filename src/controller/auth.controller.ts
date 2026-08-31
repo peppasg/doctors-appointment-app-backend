@@ -22,7 +22,12 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { username, password } = req.body;
+        const { username, password } = req.body ?? {};
+
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Username and password are required' });
+        }
+
         const result = await authService.login(username, password);
 
         if (!result) {
