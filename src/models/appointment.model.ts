@@ -14,16 +14,11 @@ const AppointmentSchema = new Schema<IAppointment>({
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
     date: { type: String, required: true },
     slot: { type: String, required: true },
-    specialty: { type: String, required: true, default: 'General Medicine' },
+    specialty: { type: String, required: true, default: 'Pathology' },
     status: { type: String, enum: ['booked', 'cancelled'], default: 'booked' }
 }, {
     collection: 'appointments',
-    timestamps: {
-        currentTime: () => {
-            const now = new Date();
-            return new Date(now.getTime() - now.getTimezoneOffset() * 60 * 1000);
-        },
-    },
+    timestamps: true
 });
 
 export default model<IAppointment>('Appointment', AppointmentSchema);
